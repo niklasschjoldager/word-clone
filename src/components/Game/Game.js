@@ -5,7 +5,8 @@ import { WORDS } from "../../data";
 import { checkGuess } from "../../game-helpers";
 import GuessInput from "../GuessInput";
 import GuessResults from "../GuessResults";
-import Banner from "../Banner/Banner";
+import WonBanner from "../WonBanner";
+import LostBanner from "../LostBanner";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
 
 // Pick a random word on every pageload.
@@ -40,11 +41,8 @@ function Game() {
         handleSubmitGuess={handleSubmitGuess}
         gameStatus={gameStatus}
       />
-      <Banner
-        gameStatus={gameStatus}
-        numOfGuesses={guesses.length}
-        answer={answer}
-      />
+      {gameStatus === "won" && <WonBanner numOfGuesses={guesses.length} />}
+      {gameStatus === "lost" && <LostBanner answer={answer} />}
     </>
   );
 }

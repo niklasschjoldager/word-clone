@@ -176,6 +176,14 @@ h1 {
   will-change: transform;
 }
 
+.banner-action .button {
+  background-color: var(--color-gray-900);
+  padding-inline: 0.5rem;
+  padding-block: 0.25rem;
+  color: var(--color-gray-100);
+  margin-block-start: 1rem;
+}
+
 .happy.banner {
   background: var(--color-success);
   color: white;
