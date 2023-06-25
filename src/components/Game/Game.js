@@ -16,24 +16,6 @@ function Game() {
   console.info({ answer });
   const [guesses, setGuesses] = React.useState([]);
   const [gameStatus, setGameStatus] = React.useState("running");
-  const [keyboardColors, setKeyboardColors] = React.useState({});
-
-  React.useEffect(() => {
-    let guessColors = {};
-    for (let i = 0; i < guesses.length; i++) {
-      guesses[i].forEach((guess) => {
-        if (guess.status === "correct" || guess.status === "incorrect") {
-          guessColors[guess.letter] = guess.status;
-        } else if (
-          guess.status === "misplaced" &&
-          guessColors[guess.letter] !== "correct"
-        ) {
-          guessColors[guess.letter] = guess.status;
-        }
-      });
-    }
-    setKeyboardColors(guessColors);
-  }, [guesses]);
 
   const handleRestartGame = () => {
     setAnswer(sample(WORDS));
@@ -55,18 +37,6 @@ function Game() {
     } else if (hasLost) {
       setGameStatus("lost");
     }
-
-    const colors = {};
-    guess.forEach((guess) => {
-      if (guess.status === "correct" || guess.status === "incorrect") {
-        colors[guess.letter] = guess.status;
-        return;
-      }
-
-      return null;
-    });
-    const nextKeyboardColors = { ...keyboardColors, ...colors };
-    setKeyboardColors(nextKeyboardColors);
   };
 
   return (
@@ -76,7 +46,7 @@ function Game() {
         handleSubmitGuess={handleSubmitGuess}
         gameStatus={gameStatus}
       />
-      <Keyboard colors={keyboardColors} />
+      <Keyboard guesses={guesses} />
       {gameStatus === "won" && (
         <WonBanner
           handleRestartGame={handleRestartGame}

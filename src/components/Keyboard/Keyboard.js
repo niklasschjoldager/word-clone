@@ -7,14 +7,27 @@ const ROWS = [
   ["Z", "X", "C", "V", "B", "N", "M"],
 ];
 
-function Keyboard({ colors }) {
+function getStatusByLetter(guesses) {
+  const statusObj = {};
+  guesses.forEach((guess) => {
+    guess.forEach(({ letter, status }) => {
+      statusObj[letter] = status;
+    });
+  });
+
+  return statusObj;
+}
+
+function Keyboard({ guesses }) {
+  const statusByLetter = getStatusByLetter(guesses);
+
   return (
-    <div class="keyboard">
+    <div className="keyboard">
       {ROWS.map((row, index) => {
         return (
           <div key={index} className="keyboard-row">
             {row.map((key) => (
-              <div key={key} className={classNames("key", colors[key])}>
+              <div key={key} className={classNames("key", statusByLetter[key])}>
                 {key}
               </div>
             ))}
